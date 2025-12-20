@@ -53,20 +53,20 @@ jobs:
 
             - name: Test modules
               run: |
-                  result/bin/caelestia -v
-                  result/bin/caelestia -h
-                  result/bin/caelestia toggle -h
-                  result/bin/caelestia scheme -h
-                  result/bin/caelestia scheme list
-                  result/bin/caelestia scheme get
-                  result/bin/caelestia scheme set -n gruvbox -f hard -m dark -v content
-                  result/bin/caelestia screenshot -h
-                  result/bin/caelestia record -h
-                  result/bin/caelestia clipboard -h
-                  result/bin/caelestia emoji -h
-                  result/bin/caelestia emoji
-                  result/bin/caelestia wallpaper -h
-                  result/bin/caelestia resizer -h
+                  result/bin/aura -v
+                  result/bin/aura -h
+                  result/bin/aura toggle -h
+                  result/bin/aura scheme -h
+                  result/bin/aura scheme list
+                  result/bin/aura scheme get
+                  result/bin/aura scheme set -n gruvbox -f hard -m dark -v content
+                  result/bin/aura screenshot -h
+                  result/bin/aura record -h
+                  result/bin/aura clipboard -h
+                  result/bin/aura emoji -h
+                  result/bin/aura emoji
+                  result/bin/aura wallpaper -h
+                  result/bin/aura resizer -h
 
             - name: Test graphical stuff
               env:
@@ -83,19 +83,19 @@ jobs:
                   nix profile install 'nixpkgs#sway'
                   sway &
                   sleep 3  # Give Sway some time to start
-                  result/bin/caelestia shell -d
+                  result/bin/aura shell -d
                   sleep 3  # Give the shell some time to start (and die)
 
                   # Test CLI graphical modules
-                  result/bin/caelestia clipboard &
-                  result/bin/caelestia emoji -p &
-                  result/bin/caelestia shell -s
-                  result/bin/caelestia shell drawers list
-                  result/bin/caelestia shell mpris list
-                  result/bin/caelestia shell notifs clear
+                  result/bin/aura clipboard &
+                  result/bin/aura emoji -p &
+                  result/bin/aura shell -s
+                  result/bin/aura shell drawers list
+                  result/bin/aura shell mpris list
+                  result/bin/aura shell notifs clear
 
                   pgrep .quickshell-wra  # Fail job if shell died
-                  result/bin/caelestia shell -k
+                  result/bin/aura shell -k
                   killall sway  # Screw using IPC
 
             - name: Check for changes

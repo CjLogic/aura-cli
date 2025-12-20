@@ -1,13 +1,13 @@
 {
-  description = "CLI for Caelestia dots";
+  description = "CLI for Aura dots";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
 
-    caelestia-shell = {
-      url = "github:caelestia-dots/shell";
+    aura-shell = {
+      url = "github:CjLogic/aura-shell";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.caelestia-cli.follows = "";
+      inputs.aura-cli.follows = "";
     };
   };
 
@@ -24,12 +24,12 @@
     formatter = forAllSystems (pkgs: pkgs.alejandra);
 
     packages = forAllSystems (pkgs: rec {
-      caelestia-cli = pkgs.callPackage ./default.nix {
+      aura-cli = pkgs.callPackage ./default.nix {
         rev = self.rev or self.dirtyRev;
-        caelestia-shell = inputs.caelestia-shell.packages.${pkgs.system}.default;
+        aura-shell = inputs.aura-shell.packages.${pkgs.system}.default;
       };
-      with-shell = caelestia-cli.override {withShell = true;};
-      default = caelestia-cli;
+      with-shell = aura-cli.override {withShell = true;};
+      default = aura-cli;
     });
 
     devShells = forAllSystems (pkgs: {

@@ -15,13 +15,13 @@
   gpu-screen-recorder,
   dconf,
   killall,
-  caelestia-shell,
+  aura-shell,
   withShell ? false,
   discordBin ? "discord",
   qtctStyle ? "Darkly",
 }:
 python3.pkgs.buildPythonApplication {
-  pname = "caelestia-cli";
+  pname = "aura-cli";
   version = "${rev}";
   src = ./.;
   pyproject = true;
@@ -36,7 +36,7 @@ python3.pkgs.buildPythonApplication {
     pillow
   ];
 
-  pythonImportsCheck = ["caelestia"];
+  pythonImportsCheck = ["aura"];
 
   nativeBuildInputs = [installShellFiles];
   propagatedBuildInputs =
@@ -54,35 +54,35 @@ python3.pkgs.buildPythonApplication {
       dconf
       killall
     ]
-    ++ lib.optional withShell caelestia-shell;
+    ++ lib.optional withShell aura-shell;
 
   SETUPTOOLS_SCM_PRETEND_VERSION = 1;
 
   patchPhase = ''
     # Replace qs config call with nix shell pkg bin
-    substituteInPlace src/caelestia/subcommands/shell.py \
-    	--replace-fail '"qs", "-c", "caelestia"' '"caelestia-shell"'
-    substituteInPlace src/caelestia/subcommands/screenshot.py \
-    	--replace-fail '"qs", "-c", "caelestia"' '"caelestia-shell"'
+    substituteInPlace src/aura/subcommands/shell.py \
+    	--replace-fail '"qs", "-c", "aura"' '"aura-shell"'
+    substituteInPlace src/aura/subcommands/screenshot.py \
+    	--replace-fail '"qs", "-c", "aura"' '"aura-shell"'
 
     # Use config bin instead of discord + fix todoist + fix app2unit
-    substituteInPlace src/caelestia/subcommands/toggle.py \
+    substituteInPlace src/aura/subcommands/toggle.py \
     	--replace-fail 'discord' ${discordBin} \
       --replace-fail 'todoist' 'todoist.desktop'\
       --replace-fail 'app2unit' ${app2unit}/bin/app2unit
 
     # Use config style instead of darkly
-    substituteInPlace src/caelestia/data/templates/qtct.conf \
+    substituteInPlace src/aura/data/templates/qtct.conf \
     	--replace-fail 'Darkly' '${qtctStyle}'
   '';
 
-  postInstall = "installShellCompletion completions/caelestia.fish";
+  postInstall = "installShellCompletion completions/aura.fish";
 
   meta = {
-    description = "The main control script for the Caelestia dotfiles";
-    homepage = "https://github.com/caelestia-dots/cli";
+    description = "The main control script for the Aura dotfiles";
+    homepage = "https://github.com/CjLogic/aura-cli";
     license = lib.licenses.gpl3Only;
-    mainProgram = "caelestia";
+    mainProgram = "aura";
     platforms = lib.platforms.linux;
   };
 }

@@ -1,8 +1,8 @@
 {
   "nodes": {
-    "caelestia-shell": {
+    "aura-shell": {
       "inputs": {
-        "caelestia-cli": [],
+        "aura-cli": [],
         "nixpkgs": [
           "nixpkgs"
         ],
@@ -11,13 +11,13 @@
       "locked": {
         "lastModified": 1765675511,
         "narHash": "sha256-o8Ok+UaDRDUhONI9JqytO//RlWOf6LAPnEQ7vA8f+qw=",
-        "owner": "caelestia-dots",
+        "owner": "CjLogic",
         "repo": "shell",
         "rev": "d819bf2fc3ded72ad4fa116c4f06c3afb7d59153",
         "type": "github"
       },
       "original": {
-        "owner": "caelestia-dots",
+        "owner": "CjLogic",
         "repo": "shell",
         "type": "github"
       }
@@ -41,7 +41,7 @@
     "quickshell": {
       "inputs": {
         "nixpkgs": [
-          "caelestia-shell",
+          "aura-shell",
           "nixpkgs"
         ]
       },
@@ -61,7 +61,7 @@
     },
     "root": {
       "inputs": {
-        "caelestia-shell": "caelestia-shell",
+        "aura-shell": "aura-shell",
         "nixpkgs": "nixpkgs"
       }
     }

@@ -1,6 +1,6 @@
-# caelestia-cli
+# aura-cli
 
-The main control script for the Caelestia dotfiles.
+The main control script for the Aura dotfiles.
 
 <details><summary id="dependencies">External dependencies</summary>
 
@@ -22,19 +22,19 @@ The main control script for the Caelestia dotfiles.
 
 ### Arch linux
 
-The CLI is available from the AUR as `caelestia-cli`. You can install it with an AUR helper
+The CLI is available from the AUR as `aura-cli`. You can install it with an AUR helper
 like [`yay`](https://github.com/Jguer/yay) or manually downloading the PKGBUILD and running `makepkg -si`.
 
-A package following the latest commit also exists as `caelestia-cli-git`. This is bleeding edge
+A package following the latest commit also exists as `aura-cli-git`. This is bleeding edge
 and likely to be unstable/have bugs. Regular users are recommended to use the stable package
-(`caelestia-cli`).
+(`aura-cli`).
 
 ### Nix
 
 You can run the CLI directly via `nix run`:
 
 ```sh
-nix run github:caelestia-dots/cli
+nix run github:CjLogic/aura-cli
 ```
 
 Or add it to your system configuration:
@@ -44,17 +44,17 @@ Or add it to your system configuration:
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    caelestia-cli = {
-      url = "github:caelestia-dots/cli";
+    aura-cli = {
+      url = "github:CjLogic/aura-cli";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 }
 ```
 
-The package is available as `caelestia-cli.packages.<system>.default`, which can be added to your
+The package is available as `aura-cli.packages.<system>.default`, which can be added to your
 `environment.systemPackages`, `users.users.<username>.packages`, `home.packages` if using home-manager,
-or a devshell. The CLI can then be used via the `caelestia` command.
+or a devshell. The CLI can then be used via the `aura` command.
 
 > [!TIP]
 > The default package does not have the shell enabled by default, which is required for full functionality.
@@ -62,8 +62,8 @@ or a devshell. The CLI can then be used via the `caelestia` command.
 > the CLI exposes the shell via the `shell` subcommand, meaning there is no need for the shell package
 > to be exposed.
 
-For home-manager, you can also use the Caelestia's home manager module (explained in
-[configuring](https://github.com/caelestia-dots/shell?tab=readme-ov-file#home-manager-module)) that
+For home-manager, you can also use the Aura's home manager module (explained in
+[configuring](https://github.com/CjLogic/Aura-Shell?tab=readme-ov-file#home-manager-module)) that
 installs and configures the shell and the CLI.
 
 ### Manual installation
@@ -82,15 +82,15 @@ yay -S libnotify swappy grim dart-sass app2unit wl-clipboard slurp gpu-screen-re
 
 Now, clone the repo, `cd` into it, build the wheel via `python -m build --wheel`
 and install it via `python -m installer dist/*.whl`. Then, to install the `fish`
-completions, copy the `completions/caelestia.fish` file to
-`/usr/share/fish/vendor_completions.d/caelestia.fish`.
+completions, copy the `completions/aura.fish` file to
+`/usr/share/fish/vendor_completions.d/aura.fish`.
 
 ```sh
-git clone https://github.com/caelestia-dots/cli.git
+git clone https://github.com/CjLogic/aura-cli.git
 cd cli
 python -m build --wheel
 sudo python -m installer dist/*.whl
-sudo cp completions/caelestia.fish /usr/share/fish/vendor_completions.d/caelestia.fish
+sudo cp completions/aura.fish /usr/share/fish/vendor_completions.d/aura.fish
 ```
 
 ## Usage
@@ -98,10 +98,10 @@ sudo cp completions/caelestia.fish /usr/share/fish/vendor_completions.d/caelesti
 All subcommands/options can be explored via the help flag.
 
 ```
-$ caelestia -h
-usage: caelestia [-h] [-v] COMMAND ...
+$ aura -h
+usage: aura [-h] [-v] COMMAND ...
 
-Main control script for the Caelestia dotfiles
+Main control script for the Aura dotfiles
 
 options:
   -h, --help     show this help message and exit
@@ -124,7 +124,7 @@ subcommands:
 
 ## Configuring
 
-All configuration options are in `~/.config/caelestia/cli.json`.
+All configuration options are in `~/.config/aura/cli.json`.
 
 <details><summary>Example configuration</summary>
 

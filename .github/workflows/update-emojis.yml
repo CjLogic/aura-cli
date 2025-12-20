@@ -1,4 +1,4 @@
-# Updates the emoji/glyph list in src/caelestia/data/emojis.txt
+# Updates the emoji/glyph list in src/aura/data/emojis.txt
 
 name: Update emojis
 
@@ -28,16 +28,16 @@ jobs:
                   pip install .
 
             - name: Fetch emojis
-              run: ./bin/caelestia emoji -f
+              run: ./bin/aura emoji -f
 
             - name: Check for changes
               id: check
-              run: echo modified=$(git diff --exit-code src/caelestia/data/emojis.txt &>/dev/null && echo 'false' || echo 'true') >> $GITHUB_OUTPUT
+              run: echo modified=$(git diff --exit-code src/aura/data/emojis.txt &>/dev/null && echo 'false' || echo 'true') >> $GITHUB_OUTPUT
 
             - name: Commit and push changes
               if: steps.check.outputs.modified == 'true'
               uses: EndBug/add-and-commit@v9
               with:
-                  add: src/caelestia/data/emojis.txt
+                  add: src/aura/data/emojis.txt
                   default_author: github_actions
                   message: "[CI] emojis: update data"
