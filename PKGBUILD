@@ -5,27 +5,37 @@ pkgrel=1
 arch=('x86_64')
 url='https://github.com/CjLogic/aura-cli'
 license=('GPL-3.0-only')
-depends=('libnotify' 'swappy' 'grim' 'dart-sass' 'wl-clipboard' 'slurp' 'gpu-screen-recorder' 'glib2' 'cliphist' 'fuzzel')
+depends=('python' 'python-pillow' 'python-materialyoucolor' 'libnotify' 'swappy' 'grim' 'dart-sass' 'wl-clipboard' 'slurp' 'gpu-screen-recorder' 'glib2' 'cliphist' 'fuzzel')
+makedepends=('python-build' 'python-installer' 'python-wheel')
 optdepends=('app2unit: systemd user service manager')
 
 prepare() {
   # Copy local files to srcdir (only if not already there)
   if [ "$BUILDDIR" != "$srcdir" ]; then
-    # Copy the actual directories from aura-cli
-    cp -r "$BUILDDIR/bin" "$srcdir/" 2>/dev/null || true
-    cp -r "$BUILDDIR/completions" "$srcdir/" 2>/dev/null || true
-
-    # Copy top-level files
-    for f in .envrc LICENSE README.md pyproject.toml default.nix flake.nix .gitignore; do
-      if [ -f "$BUILDDIR/$f" ]; then
-        cp "$BUILDDIR/$f" "$srcdir/" 2>/dev/null || true
-      fi
-    done
+    # Preserve full layout including hidden files
+    cp -a "$BUILDDIR/." "$srcdir/" 2>/dev/null || true
   fi
 }
 
+build() {
+  cd "$srcdir"
+
+  # Build Python wheel
+  python -m build --wheel --no-isolation
+}
+
 package() {
-  # Create target directory under /opt
+  cd "$srcdir"
+
+  # Install Python wheel
+  python -m installer --destdir="$pkgdir" dist/*.whl
+
+  # Install fish completions
+  if [ -f "$srcdir/completions/aura.fish" ]; then
+    install -Dm644 "$srcdir/completions/aura.fish" "$pkgdir/usr/share/fish/vendor_completions.d/aura.fish"
+  fi
+
+  # Create target directory under /opt for additional files
   mkdir -p "$pkgdir/opt/$pkgname"
 
   # Copy bin directory
@@ -44,12 +54,6 @@ package() {
       cp -a "$srcdir/$f" "$pkgdir/opt/$pkgname/"
     fi
   done
-
-  # Create symlink for main executable if present
-  if [ -f "$pkgdir/opt/$pkgname/bin/aura" ]; then
-    mkdir -p "$pkgdir/usr/bin"
-    ln -sf "/opt/$pkgname/bin/aura" "$pkgdir/usr/bin/aura"
-  fi
 
   # Set proper permissions for executables in bin/
   if [ -d "$pkgdir/opt/$pkgname/bin" ]; then
